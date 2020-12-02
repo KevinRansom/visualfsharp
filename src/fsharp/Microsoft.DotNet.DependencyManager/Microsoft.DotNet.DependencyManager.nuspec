@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        $CommonMetadataElements$
+        <language>en-US</language>
+        <dependencies>
+            <dependency id="FSharp.Core" version="$FSharpCoreVersion$" />
+        </dependencies>
+        <contentFiles> <!-- Deploy doc comments as Content -->
+            <files include="**/Microsoft.DotNet.DependencyManager.xml" buildAction="None" copyToOutput="true" flatten="true" />
+        </contentFiles> 
+    </metadata>
+    <files>
+        $CommonFileElements$
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\netstandard2.0\Microsoft.DotNet.DependencyManager.dll"    target="lib\netstandard2.0" />
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\netstandard2.0\Microsoft.DotNet.DependencyManager.xml"    target="lib\netstandard2.0" />
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\netstandard2.0\Microsoft.DotNet.DependencyManager.xml"    target="contentFiles/any/netstandard2.0" />
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\net472\Microsoft.DotNet.DependencyManager.dll"            target="lib\net472" />
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\net472\Microsoft.DotNet.DependencyManager.xml"            target="lib\net472" />
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\net472\Microsoft.DotNet.DependencyManager.xml"    target="contentFiles/any/net472" />
+
+        <!-- resources -->
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\netstandard2.0\**\Microsoft.DotNet.DependencyManager.resources.dll"   target="lib\netstandard2.0" />
+        <file src="Microsoft.DotNet.DependencyManager\$Configuration$\net472\**\Microsoft.DotNet.DependencyManager.resources.dll"   target="lib\net472" />
+
+    </files>
+</package>

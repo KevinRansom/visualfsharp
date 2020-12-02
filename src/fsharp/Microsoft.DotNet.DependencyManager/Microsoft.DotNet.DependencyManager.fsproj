@@ -5,13 +5,18 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-    <IsPackable>true</IsPackable>
     <TargetFrameworks Condition="'$(OS)' == 'Unix'">netstandard2.0</TargetFrameworks>
     <AssemblyName>Microsoft.DotNet.DependencyManager</AssemblyName>
     <NoWarn>$(NoWarn);45;55;62;75;1204</NoWarn>
     <AllowCrossTargeting>true</AllowCrossTargeting>
     <OtherFlags>$(OtherFlags) --warnon:1182 --maxerrors:20 --extraoptimizationloops:1</OtherFlags>
     <Tailcalls>true</Tailcalls> <!-- .tail annotations always emitted for this binary, even in debug mode -->
+
+    <PreRelease>true</PreRelease>
+    <PackageId>Microsoft.DotNet.DependencyManager</PackageId>
+    <PackageVersionPrefix>$(FSCorePackageVersion)</PackageVersionPrefix>
+    <NuspecFile>Microsoft.DotNet.DependencyManager.nuspec</NuspecFile>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <Target Name="CopyToBuiltBin" BeforeTargets="BuiltProjectOutputGroup" AfterTargets="CoreCompile">
