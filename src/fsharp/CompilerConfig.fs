@@ -626,6 +626,11 @@ type TcConfigBuilder =
           langVersion = LanguageVersion("default")
         }
 
+    member tcConfigB.GetAssemblyProbingPaths () =
+        tcConfigB.referencedDLLs
+            |> Seq.map(fun ref ->ref.Text)
+            |> Seq.distinct
+
     // Directories to start probing in
     // Algorithm:
     //  Search for native libraries using:
@@ -1177,6 +1182,8 @@ type TcConfig private (data: TcConfigBuilder, validate: bool) =
     member _.PrimaryAssemblyDllReference() = primaryAssemblyReference
 
     member _.CoreLibraryDllReference() = fslibReference
+
+    member _.GetAssemblyProbingPaths() = data.GetAssemblyProbingPaths()
 
     member _.GetNativeProbingRoots() = data.GetNativeProbingRoots()
 

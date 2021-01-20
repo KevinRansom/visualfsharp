@@ -312,6 +312,9 @@ type TcConfigBuilder =
 
     static member SplitCommandLineResourceInfo: string -> string * string * ILResourceAccess
 
+    // List of paths for #r assemblies for probing
+    member GetAssemblyProbingPaths: unit -> seq<string>
+
     // Directories to start probing in for native DLLs for FSI dynamic loading
     member GetNativeProbingRoots: unit -> seq<string>
 
