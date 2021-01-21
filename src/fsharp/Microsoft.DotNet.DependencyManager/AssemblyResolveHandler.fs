@@ -17,7 +17,7 @@ open System.Runtime.Loader
 type AssemblyResolveHandlerCoreclr (assemblyProbingPaths: AssemblyResolutionProbe) as this =
     let assemblyLoadContextType: Type = Type.GetType("System.Runtime.Loader.AssemblyLoadContext, System.Runtime.Loader", false)
 
-    let loadFromAssemblyPathMethod =
+    let _loadFromAssemblyPathMethod =
         assemblyLoadContextType.GetMethod("LoadFromAssemblyPath", [| typeof<string> |])
 
     let eventInfo, handler, defaultAssemblyLoadContext =
@@ -32,9 +32,10 @@ type AssemblyResolveHandlerCoreclr (assemblyProbingPaths: AssemblyResolutionProb
 
     do eventInfo.AddEventHandler(defaultAssemblyLoadContext, handler)
 
-    member _.ResolveAssemblyNetStandard (ctxt: 'T) (assemblyName: AssemblyName): Assembly =
+    member _.ResolveAssemblyNetStandard (_ctxt: 'T) (assemblyName: AssemblyName): Assembly =
         let loadAssembly path =
-            loadFromAssemblyPathMethod.Invoke(ctxt, [| path |]) :?> Assembly
+//            loadFromAssemblyPathMethod.Invoke(ctxt, [| path |]) :?> Assembly
+            Assembly.LoadFrom(path)
 
         let assemblyPaths =
             match assemblyProbingPaths with

@@ -286,6 +286,7 @@ printfn ""%A"" result
     member _.``ML - use assembly with ref dependencies``() =
         let code = """
 #r "nuget:Microsoft.ML.OnnxTransformer,1.4.0"
+#r "nuget:System.Memory,4.5.4"
 
 open System
 open System.Numerics.Tensors
@@ -310,8 +311,8 @@ let resourceClient = Azure.ResourceManager.Resources.ResourcesManagementClient("
         use script = new FSharpScript(additionalArgs=[|"/langversion:preview"|])
 
         // Ensure, assemblies load, compile and execute without issue
-        script.Eval(code)
-        |> getValue         // Provoke an exception on error
+        let result = script.Eval(code)
+        result |> getValue         // Provoke an exception on error
         |>ignore
 
     [<Fact>]

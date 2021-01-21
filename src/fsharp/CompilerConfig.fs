@@ -630,6 +630,8 @@ type TcConfigBuilder =
         tcConfigB.referencedDLLs
             |> Seq.map(fun ref ->ref.Text)
             |> Seq.distinct
+            |> ignore
+        Seq.empty<string>
 
     // Directories to start probing in
     // Algorithm:
