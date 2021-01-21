@@ -770,7 +770,7 @@ type internal FsiCommandLineOptions(fsi: FsiEvaluationSessionHostConfig,
     // We need a dependency provider with native resolution.  Managed resolution is handled by generated `#r`
     let dependencyProvider = new DependencyProvider(AssemblyResolutionProbe(tcConfigB.GetAssemblyProbingPaths), NativeResolutionProbe(tcConfigB.GetNativeProbingRoots))
 
-    do 
+    do
         if tcConfigB.utf8output then
             let prev = Console.OutputEncoding
             Console.OutputEncoding <- System.Text.Encoding.UTF8

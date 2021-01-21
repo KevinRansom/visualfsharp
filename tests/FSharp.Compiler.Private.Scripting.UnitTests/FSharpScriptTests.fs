@@ -286,7 +286,6 @@ printfn ""%A"" result
     member _.``ML - use assembly with ref dependencies``() =
         let code = """
 #r "nuget:Microsoft.ML.OnnxTransformer,1.4.0"
-#r "nuget:System.Memory,4.5.4"
 
 open System
 open System.Numerics.Tensors
@@ -298,6 +297,22 @@ tInput.Length
         let opt = script.Eval(code)  |> getValue
         let value = opt.Value
         Assert.Equal(4L, downcast value.ReflectionValue)
+
+
+    [<Fact>]
+    member _.``Azure.ResourceManager.Resources - requires assembly resolver to resolve a #r assembly``() =
+        let code = """
+#r "nuget: Azure.Identity, 1.3.0"
+#r "nuget: Azure.ResourceManager.Resources, 1.0.0-preview.2"
+let creds = Azure.Identity.DefaultAzureCredential()
+let resourceClient = Azure.ResourceManager.Resources.ResourcesManagementClient("mySubscriptionId", creds)
+    """
+        use script = new FSharpScript(additionalArgs=[|"/langversion:preview"|])
+
+        // Ensure, assemblies load, compile and execute without issue
+        script.Eval(code)
+        |> getValue         // Provoke an exception on error
+        |>ignore
 
     [<Fact>]
     member _.``System.Device.Gpio - Ensure we reference the runtime version of the assembly``() =
