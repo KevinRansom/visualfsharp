@@ -1973,7 +1973,7 @@ let GenConstArray cenv (cgbuf: CodeGenBuffer) eenv ilElementType (data:'a[]) (wr
 // the bodies of methods in a couple of places
 //-------------------------------------------------------------------------
 
-let CodeGenThen cenv mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs, codeGenFunction, m) =
+let CodeGenThen mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs, codeGenFunction, m) =
     let cgbuf = new CodeGenBuffer(m, mgbuf, methodName, alreadyUsedArgs)
     let start = CG.GenerateMark cgbuf "mstart"
     let innerVals = entryPointInfo |> List.map (fun (v, kind) -> (v, (kind, start)))
@@ -1983,56 +1983,66 @@ let CodeGenThen cenv mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs, c
                                      liveLocals=IntMap.empty()
                                      innerVals = innerVals}
 
-    let locals, maxStack, lab2pc, code, exnSpecs, hasDebugPoints = cgbuf.Close()
+    let handleClose () =
+        let locals, maxStack, lab2pc, code, exnSpecs, hasDebugPoints = cgbuf.Close()
 
-    let localDebugSpecs: ILLocalDebugInfo list =
-        locals
-        |> List.mapi (fun i (nms, _, _isFixed) -> List.map (fun nm -> (i, nm)) nms)
-        |> List.concat
-        |> List.map (fun (i, (nm, (start, finish))) ->
-            { Range=(start.CodeLabel, finish.CodeLabel)
-              DebugMappings= [{ LocalIndex=i; LocalName=nm }] })
+        let localDebugSpecs: ILLocalDebugInfo list =
+            locals
+            |> List.mapi (fun i (nms, _, _isFixed) -> List.map (fun nm -> (i, nm)) nms)
+            |> List.concat
+            |> List.map (fun (i, (nm, (start, finish))) ->
+                { Range=(start.CodeLabel, finish.CodeLabel)
+                  DebugMappings= [{ LocalIndex=i; LocalName=nm }] })
 
-    let ilLocals =
-        locals
-        |> List.map (fun (infos, ty, isFixed) ->
-          let loc =
-            // in interactive environment, attach name and range info to locals to improve debug experience
-            if cenv.opts.isInteractive && cenv.opts.generateDebugSymbols then
-                match infos with
-                | [(nm, (start, finish))] -> mkILLocal ty (Some(nm, start.CodeLabel, finish.CodeLabel))
-                // REVIEW: what do these cases represent?
-                | _ :: _
-                | [] -> mkILLocal ty None
-            // if not interactive, don't bother adding this info
+        let ilLocals =
+            locals
+            |> List.map (fun (infos, ty, isFixed) ->
+              let loc =
+                // in interactive environment, attach name and range info to locals to improve debug experience
+                if mgbuf.cenv.opts.isInteractive && mgbuf.cenv.opts.generateDebugSymbols then
+                    match infos with
+                    | [(nm, (start, finish))] -> mkILLocal ty (Some(nm, start.CodeLabel, finish.CodeLabel))
+                    // REVIEW: what do these cases represent?
+                    | _ :: _
+                    | [] -> mkILLocal ty None
+                // if not interactive, don't bother adding this info
+                else
+                    mkILLocal ty None
+              if isFixed then { loc with IsPinned=true } else loc)
+
+        (ilLocals,
+         maxStack,
+         lab2pc,
+         code,
+         exnSpecs,
+         localDebugSpecs,
+         hasDebugPoints)
+
+    handleClose()
+
+let CodeGenMethod (mgbuf:AssemblyBuilder) (entryPointInfo, methodName, eenv, alreadyUsedArgs, codeGenFunction, m) =
+
+    let result = CodeGenThen mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs, codeGenFunction, m)
+
+    let handleCodeGen () =
+        let locals, maxStack, lab2pc, instrs, exns, localDebugSpecs, hasDebugPoints = result
+        let code = IL.buildILCode methodName lab2pc instrs exns localDebugSpecs
+
+        // Attach a source range to the method. Only do this is it has some sequence points, because .NET 2.0/3.5
+        // ILDASM has issues if you emit symbols with a source range but without any sequence points
+        let sourceRange =
+            if hasDebugPoints then
+                GenPossibleILSourceMarker mgbuf.cenv m
             else
-                mkILLocal ty None
-          if isFixed then { loc with IsPinned=true } else loc)
+                None
 
-    (ilLocals,
-     maxStack,
-     lab2pc,
-     code,
-     exnSpecs,
-     localDebugSpecs,
-     hasDebugPoints)
+        // The old union erasure phase increased maxstack by 2 since the code pushes some items, we do the same here
+        let maxStack = maxStack + 2
 
-let CodeGenMethod cenv mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs, codeGenFunction, m) =
+        // Build an Abstract IL method 
+        instrs, mkILMethodBody (true, locals, maxStack, code, sourceRange)
 
-    let locals, maxStack, lab2pc, instrs, exns, localDebugSpecs, hasDebugPoints =
-      CodeGenThen cenv mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs, codeGenFunction, m)
-
-    let code = IL.buildILCode methodName lab2pc instrs exns localDebugSpecs
-
-    // Attach a source range to the method. Only do this is it has some sequence points, because .NET 2.0/3.5
-    // ILDASM has issues if you emit symbols with a source range but without any sequence points
-    let sourceRange = if hasDebugPoints then GenPossibleILSourceMarker cenv m else None
-
-    // The old union erasure phase increased maxstack by 2 since the code pushes some items, we do the same here
-    let maxStack = maxStack + 2
-
-    // Build an Abstract IL method 
-    instrs, mkILMethodBody (true, locals, maxStack, code, sourceRange)
+    handleCodeGen()
 
 let StartDelayedLocalScope nm cgbuf =
     let startScope = CG.GenerateDelayMark cgbuf ("start_" + nm)
@@ -2440,10 +2450,10 @@ and GenExprs cenv cgbuf eenv es =
 
 and CodeGenMethodForExpr cenv mgbuf (spReq, entryPointInfo, methodName, eenv, alreadyUsedArgs, expr0, sequel0) =
     let _, code =
-        CodeGenMethod cenv mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs,
+        CodeGenMethod mgbuf (entryPointInfo, methodName, eenv, alreadyUsedArgs,
                                    (fun cgbuf eenv -> GenExpr cenv cgbuf eenv spReq expr0 sequel0),
                                    expr0.Range)
-    code      
+    code
 
 //--------------------------------------------------------------------------
 // Generate sequels
@@ -4457,7 +4467,7 @@ and GenSequenceExpr
 
     let getFreshMethod =
         let _, mbody =
-            CodeGenMethod cenv cgbuf.mgbuf
+            CodeGenMethod cgbuf.mgbuf
                 ([], "GetFreshEnumerator", eenvinner, 1,
                  (fun cgbuf eenv ->
                     GenWitnessArgsFromWitnessInfos cenv cgbuf eenv m cloWitnessInfos
@@ -7004,7 +7014,7 @@ and GenImplFile cenv (mgbuf: AssemblyBuilder) mainInfoOpt eenv (implFile: TypedI
     
     // topInstrs is ILInstr[] and contains the abstract IL for this file's top-level actions. topCode is the ILMethodBody for that same code.
     let topInstrs, topCode =
-        CodeGenMethod cenv mgbuf
+        CodeGenMethod mgbuf
             ([], methodName, eenv, 0,
              (fun cgbuf eenv ->
                   GenModuleExpr cenv cgbuf qname lazyInitInfo eenv mexpr
@@ -7985,7 +7995,7 @@ let CodegenAssembly cenv eenv mgbuf implFiles =
         if not (isNil extraBindings) then
             let mexpr = TMDefs [ for b in extraBindings -> TMDefLet(b, range0) ]
             let _emptyTopInstrs, _emptyTopCode =
-                CodeGenMethod cenv mgbuf ([], "unused", eenv, 0, (fun cgbuf eenv ->
+                CodeGenMethod mgbuf ([], "unused", eenv, 0, (fun cgbuf eenv ->
                     let lazyInitInfo = ResizeArray()
                     let qname = QualifiedNameOfFile(mkSynId range0 "unused")
                     LocalScope "module" cgbuf (fun scopeMarks ->
