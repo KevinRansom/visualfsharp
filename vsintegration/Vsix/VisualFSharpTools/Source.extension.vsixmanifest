@@ -6,7 +6,8 @@
     <Identity Id="VisualFSharpTools" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft.VisualFSharpTools" />
     <DisplayName>Visual F# Compiler Tools</DisplayName>
     <Description xml:space="preserve">Deploy Visual F# Compiler Tools to Visual Studio</Description>
-    <PackageId>Microsoft.FSharp.VSIX.Tools.Core</PackageId>
+<!--    <PackageId>Microsoft.FSharp.VSIX.Tools.Core</PackageId>  -->
+    <PackageId>Microsoft.FSharp.VSIX.Templates</PackageId>
     <MoreInfo>https://docs.microsoft.com/en-us/dotnet/articles/fsharp/</MoreInfo>
   </Metadata>
 
