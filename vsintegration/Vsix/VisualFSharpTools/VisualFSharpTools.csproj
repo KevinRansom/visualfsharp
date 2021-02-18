@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(FSharpSourcesRoot)\fsharp\FSharp.Build\FSharp.Build.fsproj">
+      <ProjectReference Include="$(FSharpSourcesRoot)\fsharp\FSharp.Build\FSharp.Build.fsproj">
       <Project>{702A7979-BCF9-4C41-853E-3ADFC9897890}</Project>
       <Name>FSharp.Build</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3b</IncludeOutputGroupsInVSIX>
@@ -56,6 +56,17 @@
       <Private>True</Private>
     </ProjectReference>
 
+    <ProjectReference Include="$(FSharpSourcesRoot)\fsharp\FSharp.Core\FSharp.Core.fsproj">
+      <Project>{DED3BBD7-53F4-428A-8C9F-27968E768605}</Project>
+      <Name>FSharp.Core</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+      <Ngen>true</Ngen>
+      <NgenArchitecture>All</NgenArchitecture>
+      <NgenPriority>2</NgenPriority>
+      <Private>True</Private>
+    </ProjectReference>
+
     <ProjectReference Include="$(FSharpSourcesRoot)\fsharp\FSharp.Compiler.Service\FSharp.Compiler.Service.fsproj">
       <Project>{A59DB8AE-8044-41A5-848A-800A7FF31C93}</Project>
       <Name>FSharp.Compiler.Service</Name>
@@ -68,28 +79,16 @@
       <AdditionalProperties>TargetFramework=$(DependencyTargetFramework)</AdditionalProperties>
     </ProjectReference>
 
-    <ProjectReference Include="$(FSharpSourcesRoot)\fsharp\FSharp.Core\FSharp.Core.fsproj">
-      <Project>{DED3BBD7-53F4-428A-8C9F-27968E768605}</Project>
-      <Name>FSharp.Core</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
-      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
-      <Ngen>true</Ngen>
-      <NgenArchitecture>All</NgenArchitecture>
-      <NgenPriority>2</NgenPriority>
-      <Private>True</Private>
-    </ProjectReference>
-
     <ProjectReference Include="..\..\..\src\fsharp\fsiAnyCpu\fsiAnyCpu.fsproj">
       <Project>{8B3E283D-B5FE-4055-9D80-7E3A32F3967B}</Project>
       <Name>FsiAnyCpu</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
       <Ngen>true</Ngen>
-      <NgenApplication>[installDir]\Common7\IDE\CommonExtensions\Microsoft\FSharp\Tools\fsiAnyCpu.exe</NgenApplication>
+      <NgenApplication>[installDir]\Common7\IDE\CommonExtensions\Microsoft\FSharpTools\fsiAnyCpu.exe</NgenApplication>
       <NgenArchitecture>X64</NgenArchitecture>
       <NgenPriority>2</NgenPriority>
       <Private>True</Private>
-      <VSIXSubPath>Tools</VSIXSubPath>
       <AdditionalProperties>TargetFramework=$(DependencyTargetFramework)</AdditionalProperties>
     </ProjectReference>
 
@@ -99,7 +98,7 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
       <Ngen>true</Ngen>
-      <NgenApplication>[installDir]\Common7\IDE\CommonExtensions\Microsoft\FSharp\Tools\fsi.exe</NgenApplication>
+      <NgenApplication>[installDir]\Common7\IDE\CommonExtensions\Microsoft\FSharpTools\fsi.exe</NgenApplication>
       <NgenArchitecture>X86</NgenArchitecture>
       <NgenPriority>2</NgenPriority>
       <Private>True</Private>
@@ -112,13 +111,12 @@
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bGetCopyToOutputDirectoryItems%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
       <Ngen>true</Ngen>
-      <NgenApplication>[installDir]\Common7\IDE\CommonExtensions\Microsoft\FSharp\Tools\fsc.exe</NgenApplication>
+      <NgenApplication>[installDir]\Common7\IDE\CommonExtensions\Microsoft\FSharpTools\fsc.exe</NgenApplication>
       <NgenArchitecture>All</NgenArchitecture>
       <NgenPriority>2</NgenPriority>
       <Private>True</Private>
       <AdditionalProperties>TargetFramework=$(DependencyTargetFramework)</AdditionalProperties>
     </ProjectReference>
-
   </ItemGroup>
 
 </Project>

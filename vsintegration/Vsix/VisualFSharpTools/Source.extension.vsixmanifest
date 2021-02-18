@@ -4,7 +4,7 @@
 
   <Metadata>
     <Identity Id="VisualFSharpTools" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft.VisualFSharpTools" />
-    <DisplayName>Visual F# Tools</DisplayName>
+    <DisplayName>Visual F# Compiler Tools</DisplayName>
     <Description xml:space="preserve">Deploy Visual F# Compiler Tools to Visual Studio</Description>
     <PackageId>Microsoft.FSharp.VSIX.Tools.Core</PackageId>
     <MoreInfo>https://docs.microsoft.com/en-us/dotnet/articles/fsharp/</MoreInfo>
@@ -16,6 +16,7 @@
 
   <Installer>
     <Actions>
+      <Action Type="Ngen" Path="FSharp.Build.dll" />
       <Action Type="Ngen" Path="fsiAnyCpu.exe" />
       <Action Type="Ngen" Path="fsi.exe" />
       <Action Type="Ngen" Path="fsc.exe" />
