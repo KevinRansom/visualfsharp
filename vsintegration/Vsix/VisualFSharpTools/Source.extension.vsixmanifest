@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft Corporation.  All Rights Reserved.  See License.txt in the project root for license information. -->
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+
+  <Metadata>
+    <Identity Id="VisualFSharpTools" Version="|%CurrentProject%;GetVsixVersion|" Language="en-US" Publisher="Microsoft.VisualFSharpTools" />
+    <DisplayName>Visual F# Tools</DisplayName>
+    <Description xml:space="preserve">Deploy Visual F# Compiler Tools to Visual Studio</Description>
+    <PackageId>Microsoft.FSharp.VSIX.Tools.Core</PackageId>
+    <MoreInfo>https://docs.microsoft.com/en-us/dotnet/articles/fsharp/</MoreInfo>
+  </Metadata>
+
+  <Installation Experimental="true">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[|%CurrentProject%;GetVSGeneralVersion|,)" />
+  </Installation>
+
+  <Installer>
+    <Actions>
+      <Action Type="Ngen" Path="fsiAnyCpu.exe" />
+      <Action Type="Ngen" Path="fsi.exe" />
+      <Action Type="Ngen" Path="fsc.exe" />
+      <Action Type="Ngen" Path="FSharp.Compiler.Service.dll" />
+      <Action Type="Ngen" Path="FSharp.Compiler.Interactive.Settings.dll" />
+      <Action Type="Ngen" Path="FSharp.Compiler.Server.Shared.dll" />
+      <Action Type="Ngen" Path="FSharp.Core.dll" />
+      <Action Type="Ngen" Path="FSharp.DependencyManager.Nuget.dll" />
+    </Actions>
+  </Installer>
+
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.6,)" />
+  </Dependencies>
+
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="FSharp.Compiler.Server.Shared.pkgdef" />
+  </Assets>
+
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[|%CurrentProject%;GetVSGeneralVersion|,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+
+</PackageManifest>
+
