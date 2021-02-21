@@ -773,7 +773,7 @@ You can find all tracked VS 15.9 items in the [15.9 milestone](https://github.co
 
 #### F# OSS Build
 
-* Feature (#5027) - Set VisualFSharpFull as the default startup project, by [Robert Jeppesen](https://github.com/rojepp).
+* Feature (#5027) - Set Microsoft.FSharp.VSIX.Full.Core as the default startup project, by [Robert Jeppesen](https://github.com/rojepp).
 
 ### Visual Studio 15.8.5
 

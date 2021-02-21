@@ -122,7 +122,7 @@ See (DEVGUIDE.md#Developing on Windows) for instructions to install what is need
 
 ### Quickly see your changes locally
 
-First, ensure that `VisualFSharpFull` is the startup project.
+First, ensure that `Microsoft.FSharp.VSIX.Full.Core` is the startup project.
 
 Then, use the **f5** or **ctrl+f5** keyboard shortcuts to test your tooling changes. The former will debug a new instance of Visual Studio. The latter will launch a new instance of Visual Studio, but with your changes installed.
 

@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{CCAB6E
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.VS.FSI", "vsintegration\src\FSharp.VS.FSI\FSharp.VS.FSI.fsproj", "{991DCF75-C2EB-42B6-9A0D-AA1D2409D519}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualFSharpFull", "vsintegration\Vsix\VisualFSharpFull\VisualFSharpFull.csproj", "{59ADCE46-9740-4079-834D-9A03A3494EBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.FSharp.VSIX.Full.Core", "vsintegration\Vsix\Microsoft.FSharp.VSIX.Full.Core\Microsoft.FSharp.VSIX.Full.Core.csproj", "{59ADCE46-9740-4079-834D-9A03A3494EBC}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.Compiler.Server.Shared", "src\fsharp\FSharp.Compiler.Server.Shared\FSharp.Compiler.Server.Shared.fsproj", "{D5870CF0-ED51-4CBC-B3D7-6F56DA84AC06}"
 EndProject
@@ -142,7 +142,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.Compiler.Private.Scr
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.DependencyManager.Nuget", "src\fsharp\FSharp.DependencyManager.Nuget\FSharp.DependencyManager.Nuget.fsproj", "{DFA30881-C0B1-4813-B087-C21B5AF9B77F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualFSharpTemplates", "vsintegration\Vsix\VisualFSharpTemplates\VisualFSharpTemplates.csproj", "{AA259A37-418F-4E18-87B2-C7D5F8C26CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.FSharp.VSIX.Templates", "vsintegration\Vsix\Microsoft.FSharp.VSIX.Templates\Microsoft.FSharp.VSIX.Templates.csproj", "{AA259A37-418F-4E18-87B2-C7D5F8C26CC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectTemplates", "ProjectTemplates", "{12EF27FD-A34B-4373-860A-F9FCE9651859}"
 EndProject
@@ -157,6 +157,8 @@ EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.Compiler.Service", "src\fsharp\FSharp.Compiler.Service\FSharp.Compiler.Service.fsproj", "{B5A9BBD9-2F45-4722-A6CA-BAE3C64CD4E2}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.Compiler.Service.Tests", "tests\FSharp.Compiler.Service.Tests\FSharp.Compiler.Service.Tests.fsproj", "{14F3D3D6-5C8E-43C2-98A2-17EA704D4DEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.FSharp.VSIX.Tools", "vsintegration\Vsix\Microsoft.FSharp.VSIX.Tools\Microsoft.FSharp.VSIX.Tools.csproj", "{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -924,6 +926,18 @@ Global
 		{14F3D3D6-5C8E-43C2-98A2-17EA704D4DEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{14F3D3D6-5C8E-43C2-98A2-17EA704D4DEA}.Release|x86.ActiveCfg = Release|Any CPU
 		{14F3D3D6-5C8E-43C2-98A2-17EA704D4DEA}.Release|x86.Build.0 = Release|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Proto|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Proto|Any CPU.Build.0 = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Proto|x86.ActiveCfg = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Proto|x86.Build.0 = Debug|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -998,6 +1012,7 @@ Global
 		{0610FB97-7C15-422A-86FD-32335C6DF14D} = {CFE3259A-2D30-4EB0-80D5-E8B5F3D01449}
 		{B5A9BBD9-2F45-4722-A6CA-BAE3C64CD4E2} = {3881429D-A97A-49EB-B7AE-A82BA5FE9C77}
 		{14F3D3D6-5C8E-43C2-98A2-17EA704D4DEA} = {CFE3259A-2D30-4EB0-80D5-E8B5F3D01449}
+		{7D98166F-10F3-47DF-8A1A-97CEE6ED2BBB} = {4C7B48D7-19AF-4AE7-9D1D-3BB289D5480D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {48EDBBBE-C8EE-4E3C-8B19-97184A487B37}

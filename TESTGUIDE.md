@@ -195,7 +195,7 @@ This section contains general tips, for solving errors see [next section](#solvi
 
 ### Close any open VisualFSharp.sln
 
-If you have the `VisualFSharp.sln` open, or if you recently debugged it through `VisualFSharpFull` as start-up project, certain tests may fail because files will be in use. It's best to close Visual Studio and any debugging sessions during a test run. It is fine to have VS open on a different solution, or to have it open from a different F# repo folder.
+If you have the `Microsoft.FSharp.VSIX.Full.Core.sln` open, or if you recently debugged it through `Microsoft.FSharp.VSIX.Full.Core` as start-up project, certain tests may fail because files will be in use. It's best to close Visual Studio and any debugging sessions during a test run. It is fine to have VS open on a different solution, or to have it open from a different F# repo folder.
 
 ### Finding the logs on CI
 
