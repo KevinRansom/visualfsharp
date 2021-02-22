@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft Corporation.  All Rights Reserved.  See License.txt in the project root for license information. -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ExtensionInstallationFolder>Microsoft\FSharp</ExtensionInstallationFolder>
+    <PackageTargetFallback>netcoreapp1.0</PackageTargetFallback>
+    <IsShipping>true</IsShipping>
+    <DependencyTargetFramework>net472</DependencyTargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\Microsoft.FSharp.VSIX.Full.Core\Microsoft.FSharp.VSIX.Full.Core.references" />
+<!--
+  <Import Project="..\Microsoft.FSharp.VSIX.Tools\Microsoft.FSharp.VSIX.Tools.references" />
+-->
+
+</Project>
